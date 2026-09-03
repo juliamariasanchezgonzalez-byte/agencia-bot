@@ -1,1 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño y Desarrollo Web a la Medida</title>
+    <style>
+        /* Variables y Configuración de Tema Moderno */
+        :root {
+            --primary: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --whatsapp-color: #25d366;
+            --whatsapp-hover: #1da851;
+            --dark-bg: #0f172a;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --light-bg: #f8fafc;
+            --border: #e2e8f0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-glow: 0 0 25px rgba(37, 99, 235, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Utilidad de Animación de Desvanecido (Scroll Fade-In) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--dark-bg);
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .subtitulo-seccion {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Botones Estilizados */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primario {
+            background: var(--primary-gradient);
+            color: #ffffff;
+        }
+
+        .btn-primario:hover {
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-whatsapp {
+            background-color: var(--whatsapp-color);
+            color: #ffffff;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: var(--whatsapp-hover);
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-secundario {
+            background-color: #ffffff;
+            color: var(--dark-bg);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secundario:hover {
+            background-color: #f1f5f9;
+        }
+
+        .btn-bloque {
+            width: 100%;
+        }
+
+        /* Header con Efecto Cristal (Glassmorphism) */
+        header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .contenedor-nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark-bg);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .logo span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.8rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--dark-bg);
+        }
+
+        /* Hero Section Animado */
+        .hero {
+            text-align: center;
+            padding: 6rem 1.5rem;
+            background: radial-gradient(circle at top, rgba(37, 99, 235, 0.08) 0%, rgba(248, 250, 252, 1) 70%);
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--dark-bg);
+            max-width: 850px;
+            margin: 0 auto 1.2rem auto;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .acciones-hero {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Grids Interactivos con Flotación */
+        .grid-servicios, .grid-portafolio, .grid-precios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tarjeta-servicio, .tarjeta-portafolio, .tarjeta-precio {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tarjeta-servicio:hover, .tarjeta-portafolio:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        .icono-servicio {
+            width: 50px;
+            height: 50px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+        }
+
+        /* Portafolio con Enlaces Externos Reales y Hover de Imagen */
+        .preview-imagen {
+            height: 210px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .preview-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .tarjeta-portafolio:hover .preview-imagen img {
+            transform: scale(1.08);
+        }
+
+        .acciones-portafolio {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.88rem;
+            border-radius: 8px;
+        }
+
+        /* Tabla de Precios Destacada */
+        .tarjeta-precio {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tarjeta-precio.destacado {
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow-glow);
+            transform: scale(1.03);
+        }
+
+        .insignia {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-gradient);
+            color: #ffffff;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .precio {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark-bg);
+            margin: 1rem 0;
+        }
+
+        .precio span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .tarjeta-precio ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .tarjeta-precio li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+        }
+
+        /* Formulario con Redirección a WhatsApp */
+        .formulario-contacto {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            max-width: 650px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .campo {
+            margin-bottom: 1.5rem;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-bg);
+        }
+
+        .campo input, .campo select, .campo textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .campo input:focus, .campo select:focus, .campo textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Botón Flotante Permanente de WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp-color);
+            color: #fff;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: var(--whatsapp-hover);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            padding: 3rem 0;
+            margin-top: 5rem;
+            text-align: center;
+        }
+
+        .redes-footer {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .redes-footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .redes-footer a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                padding: 1.5rem 0;
+                border-bottom: 1px solid var(--border);
+                box-shadow: var(--shadow-lg);
+            }
+            .nav-links.activo { display: flex; }
+            .hero h1 { font-size: 2.1rem; }
+            .tarjeta-precio.destacado { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón Flotante Directo de WhatsApp -->
+    <a href="https://wa.me/5350722286?text=Hola,%20quisiera%20consultar%20sobre%20sus%20servicios%20de%20diseño%20web" class="whatsapp-float" target="_blank" aria-label="Contacto por WhatsApp">
+        💬
+    </a>
+
+    <!-- Header Semitransparente -->
+    <header>
+        <nav class="contenedor-nav">
+            <a href="#" class="logo">⚡ MiLogo<span>Web</span></a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">☰</button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#portafolio">Portafolio</a></li>
+                <li><a href="#precios">Planes</a></li>
+                <li><a href="#contacto" class="btn btn-whatsapp btn-sm">WhatsApp Directo</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section con Efectos -->
+        <section id="inicio" class="hero">
+            <div class="contenedor reveal">
+                <h1>Transforma tu negocio con una <span>Web Moderna y a tu Gusto</span></h1>
+                <p>Diseño sitios web dinámicos, de alta velocidad y optimizados para conseguir clientes de forma automática.</p>
+                <div class="acciones-hero">
+                    <a href="https://wa.me/5350722286?text=Hola,%20quiero%20cotizar%20una%20página%20web" target="_blank" class="btn btn-whatsapp">📱 Escribir por WhatsApp</a>
+                    <a href="#portafolio" class="btn btn-secundario">🎨 Ver Demos en Vivo</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Servicios con Desvanecido -->
+        <section id="servicios" class="contenedor">
+            <h2 class="titulo-seccion reveal">Lo que construyo para ti</h2>
+            <p class="subtitulo-seccion reveal">Tecnología de última generación enfocada en ventas</p>
+
+            <div class="grid-servicios">
+                <article class="tarjeta-servicio reveal">
+                    <div class="icono-servicio">🎨</div>
+                    <h3>Diseño Exclusivo a Medida</h3>
+                    <p>Estructuras atractivas y personalizadas según tus colores, marca y preferencias únicas.</p>
+                </article>
+
+                <article class="tarjeta-servicio reveal">
+                    <div class="icono-servicio">📱</div>
+                    <h3>Diseño Adaptable (Responsive)</h3>
+                    <p>Tu sitio se verá y funcionará perfecto en celulares, tablets y computadoras.</p>
+                </article>
+
+                <article class="tarjeta-servicio reveal">
+                    <div class="icono-servicio">⚡</div>
+                    <h3>Integración Directa WhatsApp</h3>
+                    <p>Tus clientes te contactarán a un solo clic directo a tu chat personal.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Portafolio con Enlaces Externos de Ejemplo Reales -->
+        <section id="portafolio" class="contenedor">
+            <h2 class="titulo-seccion reveal">Catálogos y Demos Interactivas</h2>
+            <p class="subtitulo-seccion reveal">Explora ejemplos reales de lo que podemos crear para tu proyecto</p>
+
+            <div class="grid-portafolio">
+                <article class="tarjeta-portafolio reveal">
+                    <div class="preview-imagen">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="Restaurante Gourmet">
+                    </div>
+                    <h3>Sitio Web para Restaurante</h3>
+                    <p>Menú digital dinámico, galería interactiva de platillos y reservas directas.</p>
+                    <div class="acciones-portafolio">
+                        <!-- Enlace externo a un sitio de ejemplo real -->
+                        <a href="https://example.com" target="_blank" class="btn btn-secundario btn-sm">🔗 Ver Demo Real</a>
+                        <button class="btn btn-whatsapp btn-sm btn-pedir" data-demo="Restaurante">Pedir esta Web</button>
+                    </div>
+                </article>
+
+                <article class="tarjeta-portafolio reveal">
+                    <div class="preview-imagen">
+                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80" alt="Clínica Médica">
+                    </div>
+                    <h3>Página para Servicios / Salud</h3>
+                    <p>Catálogo de servicios, lista de precios, mapa interactivo y agenda de citas.</p>
+                    <div class="acciones-portafolio">
+                        <a href="https://example.com" target="_blank" class="btn btn-secundario btn-sm">🔗 Ver Demo Real</a>
+                        <button class="btn btn-whatsapp btn-sm btn-pedir" data-demo="Servicios Médicos">Pedir esta Web</button>
+                    </div>
+                </article>
+
+                <article class="tarjeta-portafolio reveal">
+                    <div class="preview-imagen">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80" alt="Tienda de Ropa">
+                    </div>
+                    <h3>Catálogo de Ropa y Productos</h3>
+                    <p>Galería estilo e-commerce, categorías de productos y consulta directa a tu WhatsApp.</p>
+                    <div class="acciones-portafolio">
+                        <a href="https://example.com" target="_blank" class="btn btn-secundario btn-sm">🔗 Ver Demo Real</a>
+                        <button class="btn btn-whatsapp btn-sm btn-pedir" data-demo="Catálogo de Productos">Pedir esta Web</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Planes e Integración Directa -->
+        <section id="precios" class="contenedor">
+            <h2 class="titulo-seccion reveal">Planes Transparentes</h2>
+            <p class="subtitulo-seccion reveal">Selecciona el paquete ideal e iniciemos hoy mismo</p>
+
+            <div class="grid-precios">
+                <div class="tarjeta-precio reveal">
+                    <div>
+                        <h3>Plan Básico</h3>
+                        <p class="precio">$150 <span>USD</span></p>
+                        <ul>
+                            <li>✔ Landing Page (Página Única)</li>
+                            <li>✔ Adaptable a Celulares</li>
+                            <li>✔ Botón Flotante a WhatsApp</li>
+                            <li>✔ Formulario Directo</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/5350722286?text=Hola,%20me%20interesa%20contratar%20el%20*Plan%20Básico*" target="_blank" class="btn btn-secundario btn-bloque">Contratar Básico</a>
+                </div>
+
+                <div class="tarjeta-precio destacado reveal">
+                    <span class="insignia">Recomendado</span>
+                    <div>
+                        <h3>Plan Emprendedor</h3>
+                        <p class="precio">$300 <span>USD</span></p>
+                        <ul>
+                            <li>✔ Hasta 5 Secciones / Páginas</li>
+                            <li>✔ Catálogo o Galería de Fotos</li>
+                            <li>✔ Carga Ultrasarrápida</li>
+                            <li>✔ Enlaces a Redes y Ubicación</li>
+                            <li>✔ Soporte Técnico Prioritario</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/5350722286?text=Hola,%20me%20interesa%20contratar%20el%20*Plan%20Emprendedor*" target="_blank" class="btn btn-whatsapp btn-bloque">Contratar Emprendedor</a>
+                </div>
+
+                <div class="tarjeta-precio reveal">
+                    <div>
+                        <h3>Plan Personalizado</h3>
+                        <p class="precio">Cotizar</p>
+                        <ul>
+                            <li>✔ Funciones Avanzadas</li>
+                            <li>✔ Integración con Sistemas</li>
+                            <li>✔ Asesoría en Textos y Marca</li>
+                            <li>✔ Diseño 100% Exclusivo</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/5350722286?text=Hola,%20quiero%20una%20cotización%20para%20un%20*Proyecto%20Personalizado*" target="_blank" class="btn btn-secundario btn-bloque">Consultar Proyecto</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulario que Redirige Automáticamente a WhatsApp -->
+        <section id="contacto" class="contenedor">
+            <h2 class="titulo-seccion reveal">Hablemos de tu Proyecto</h2>
+            <p class="subtitulo-seccion reveal">Rellena los datos y el mensaje se abrirá directamente en tu WhatsApp (+5350722286)</p>
+
+            <form id="whatsapp-form" class="formulario-contacto reveal">
+                <div class="campo">
+                    <label for="nombre">Tu Nombre</label>
+                    <input type="text" id="nombre" placeholder="Ej. Carlos Rodríguez" required>
+                </div>
+
+                <div class="campo">
+                    <label for="negocio">Tipo o Nombre de tu Negocio</label>
+                    <input type="text" id="negocio" placeholder="Ej. Tienda de ropa, Restaurante, Taller..." required>
+                </div>
+
+                <div class="campo">
+                    <label for="plan">Plan que te interesa</label>
+                    <select id="plan">
+                        <option value="Plan Básico">Plan Básico ($150 USD)</option>
+                        <option value="Plan Emprendedor">Plan Emprendedor ($300 USD)</option>
+                        <option value="Proyecto Personalizado">Proyecto a Medida</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="detalles">¿Cómo quieres que sea tu página web?</label>
+                    <textarea id="detalles" rows="4" placeholder="Cuéntame qué colores te gustan, qué información deseas incluir..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-whatsapp btn-bloque">📲 Enviar a mi WhatsApp (+5350722286)</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="contenedor">
+            <div class="redes-footer">
+                <a href="https://wa.me/5350722286" target="_blank">WhatsApp Directo</a>
+                <a href="https://instagram.com" target="_blank">Instagram</a>
+                <a href="https://facebook.com" target="_blank">Facebook</a>
+            </div>
+            <p>&copy; 2026 MiLogoWeb. Páginas Web Profesionales a la Medida.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts para Animaciones de Desvanecido e Integración de WhatsApp -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Animación de Desvanecido al Desplazarse (Scroll Reveal)
+            const observerOptions = {
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // 2. Menú Móvil Desplegable
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('activo');
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => navLinks.classList.remove('activo'));
+            });
+
+            // 3. Envío del Formulario Directo a WhatsApp (+5350722286)
+            const form = document.getElementById('whatsapp-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const miNumero = "5350722286";
+                const nombre = document.getElementById('nombre').value;
+                const negocio = document.getElementById('negocio').value;
+                const plan = document.getElementById('plan').value;
+                const detalles = document.getElementById('detalles').value;
+
+                // Construcción del mensaje predefinido para WhatsApp
+                const mensajeWhatsApp = `*¡Hola! Quiero cotizar una página web*%0A%0A` +
+                    `👤 *Nombre:* ${encodeURIComponent(nombre)}%0A` +
+                    `🏪 *Negocio:* ${encodeURIComponent(negocio)}%0A` +
+                    `📌 *Plan de Interés:* ${encodeURIComponent(plan)}%0A` +
+                    `📝 *Detalles del Proyecto:* ${encodeURIComponent(detalles)}`;
+
+                // Abrir enlace directo de WhatsApp en una pestaña nueva
+                window.open(`https://wa.me/${miNumero}?text=${mensajeWhatsApp}`, '_blank');
+            });
+
+            // 4. Botones de "Pedir esta Web" en el Portafolio
+            document.querySelectorAll('.btn-pedir').forEach(boton => {
+                boton.addEventListener('click', () => {
+                    const demo = boton.getAttribute('data-demo');
+                    const miNumero = "5350722286";
+                    const mensaje = `Hola, vi el modelo de *${demo}* en tu sitio web y me gustaría pedir una página similar para mi negocio.`;
+                    
+                    window.open(`https://wa.me/${miNumero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
 
