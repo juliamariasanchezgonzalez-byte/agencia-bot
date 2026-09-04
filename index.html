@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS Minimercado</title>
+    <title>MercaAhumados MM - POS</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -12,6 +12,8 @@
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text: #1e293b;
+            --m-green: #22c55e;
+            --m-pink: #ec4899;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
@@ -21,7 +23,15 @@
             display: flex; justify-content: space-between; align-items: center;
             background: var(--card-bg); padding: 15px 20px; border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;
+            flex-wrap: wrap; gap: 10px;
         }
+
+        .brand-logo {
+            display: flex; align-items: center; gap: 8px; font-size: 1.8rem; font-weight: 800;
+        }
+        .m-green { color: var(--m-green); }
+        .m-pink { color: var(--m-pink); }
+        .brand-name { color: var(--text); }
 
         .container { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
         @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
@@ -63,21 +73,21 @@
 <body>
 
     <header>
-        <h1>🛒 Minimercado POS</h1>
-        <span>Punto de Venta e Inventario</span>
+        <div class="brand-logo">
+            <span class="brand-name">MercaAhumados</span>
+            <span><span class="m-green">M</span><span class="m-pink">M</span></span>
+        </div>
+        <span>Sistema Punto de Venta e Inventario</span>
     </header>
 
     <div class="container">
-        <!-- Catálogo de Productos -->
         <section>
             <h2>Productos Disponibles</h2>
             <br>
             <div class="products-grid" id="products-list"></div>
         </section>
 
-        <!-- Panel Lateral: Carrito y Métricas -->
         <aside>
-            <!-- Carrito Actual -->
             <div class="cart-panel">
                 <h2>Venta Actual</h2>
                 <div id="cart-items" style="margin-top: 15px;"></div>
@@ -85,7 +95,6 @@
                 <button class="btn-pay" onclick="procesarVenta()">Cobrar y Registrar</button>
             </div>
 
-            <!-- Panel de Control / Reportes -->
             <div class="report-panel">
                 <h2>Resumen de Ventas</h2>
                 <br>
